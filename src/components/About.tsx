@@ -10,13 +10,13 @@ export default function About() {
             <div className="lg:w-1/2">
               <h2 className="text-4xl font-bold mb-6">About Our 3D Gallery</h2>
               <p className="text-gray-300 mb-4">
-                Welcome to the future of digital galleries. Our 3D Gallery combines cutting-edge WebGL technology with stunning visuals to create an immersive experience unlike any other. Founded in 2021 by a team of passionate 3D artists and web developers, we've been pushing the boundaries of what's possible in browser-based 3D experiences.
+                Welcome to the future of digital galleries. Our 3D Gallery combines cutting-edge WebGL technology with stunning visuals to create an immersive experience unlike any other. Founded in 2021 by a team of passionate 3D artists and web developers, we&apos;ve been pushing the boundaries of what&apos;s possible in browser-based 3D experiences.
               </p>
               <p className="text-gray-300 mb-4">
-                Using Three.js and the latest in 3D rendering techniques, we've created a platform that allows you to showcase your images and 3D models in a dynamic, engaging environment that captivates viewers and brings your content to life. Our proprietary lighting and material systems ensure your work is displayed with the highest fidelity possible.
+                Using Three.js and the latest in 3D rendering techniques, we&apos;ve created a platform that allows you to showcase your images and 3D models in a dynamic, engaging environment that captivates viewers and brings your content to life. Our proprietary lighting and material systems ensure your work is displayed with the highest fidelity possible.
               </p>
               <p className="text-gray-300 mb-6">
-                Whether you're an artist looking to display your work, a photographer seeking a new way to present your portfolio, or a business wanting to showcase products in an innovative way, our 3D Gallery provides the perfect solution. With clients ranging from independent creators to major museums and galleries worldwide, we're proud to be at the forefront of digital exhibition technology.
+                Whether you&apos;re an artist looking to display your work, a photographer seeking a new way to present your portfolio, or a business wanting to showcase products in an innovative way, our 3D Gallery provides the perfect solution. With clients ranging from independent creators to major museums and galleries worldwide, we&apos;re proud to be at the forefront of digital exhibition technology.
               </p>
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors">
                 Learn More
@@ -67,7 +67,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-bold text-center mb-4">Innovation</h3>
               <p className="text-gray-300 text-center">
-                We're constantly pushing the boundaries of what's possible with web-based 3D technology, developing new features and optimizations to deliver the best experience possible.
+                We&apos;re constantly pushing the boundaries of what&apos;s possible with web-based 3D technology, developing new features and optimizations to deliver the best experience possible.
               </p>
             </div>
 
@@ -165,7 +165,7 @@ export default function About() {
               </div>
               <div className="pt-6">
                 <p className="text-gray-300 italic mb-6">
-                  "As a digital artist, I've tried many platforms to showcase my work, but nothing compares to the immersive experience of this 3D gallery. My clients are consistently impressed by the presentation quality."
+                  &quot;As a digital artist, I&apos;ve tried many platforms to showcase my work, but nothing compares to the immersive experience of this 3D gallery. My clients are consistently impressed by the presentation quality.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mr-4"></div>
@@ -185,7 +185,7 @@ export default function About() {
               </div>
               <div className="pt-6">
                 <p className="text-gray-300 italic mb-6">
-                  "We integrated the 3D Gallery into our online museum experience during the pandemic, and visitor engagement increased by 300%. The technology is flawless and the support team is incredibly responsive."
+                  &quot;We integrated the 3D Gallery into our online museum experience during the pandemic, and visitor engagement increased by 300%. The technology is flawless and the support team is incredibly responsive.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full mr-4"></div>
@@ -205,7 +205,7 @@ export default function About() {
               </div>
               <div className="pt-6">
                 <p className="text-gray-300 italic mb-6">
-                  "The 3D product visualization has transformed our e-commerce experience. Our customers can now interact with products in a way that's almost like being in a physical store, and our conversion rates have improved significantly."
+                  &quot;The 3D product visualization has transformed our e-commerce experience. Our customers can now interact with products in a way that&apos;s almost like being in a physical store, and our conversion rates have improved significantly.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full mr-4"></div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
 // Function to detect if text looks like information points with bold headers
 const isInfoPointsWithBoldHeaders = (text: string): boolean => {
@@ -179,7 +179,6 @@ const formatNumberedList = (text: string): JSX.Element[] => {
 
   let inNumberedList = false;
   let listItems: string[] = [];
-  let currentListNumber = 1;
 
   // Process each line
   lines.forEach((line, index) => {
@@ -191,7 +190,6 @@ const formatNumberedList = (text: string): JSX.Element[] => {
       if (!inNumberedList) {
         inNumberedList = true;
         listItems = [];
-        currentListNumber = parseInt(numberedListMatch[1], 10);
       }
 
       // Add the item to the current list
@@ -325,18 +323,19 @@ const formatHeadings = (elements: JSX.Element[]): JSX.Element[] => {
 
 // Function to format bold and italic text
 const formatInlineStyles = (elements: JSX.Element[]): JSX.Element[] => {
-  return elements.map((element, index) => {
+  return elements.map((element) => {
     if (element.type === 'p' || element.type === 'li') {
       const content = element.props.children as string;
 
       // Replace **bold** with <strong>bold</strong>
       // Replace *italic* with <em>italic</em>
-      let formattedContent = content;
-      let parts: React.ReactNode[] = [formattedContent];
+      let parts: React.ReactNode[] = [content];
 
       // Process bold text
       parts = parts.flatMap(part => {
-        if (typeof part !== 'string') return [part];
+        if (typeof part !== 'string') {
+          return [part];
+        }
 
         const segments = part.split(/(\*\*.*?\*\*)/g);
         return segments.map(segment => {
@@ -347,7 +346,9 @@ const formatInlineStyles = (elements: JSX.Element[]): JSX.Element[] => {
 
       // Process italic text
       parts = parts.flatMap(part => {
-        if (typeof part !== 'string') return [part];
+        if (typeof part !== 'string') {
+          return [part];
+        }
 
         const segments = part.split(/(\*.*?\*)/g);
         return segments.map(segment => {
