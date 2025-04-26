@@ -111,7 +111,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} 3D Gallery. All rights reserved.</p>
-          <p className="mt-2">Made with 💖 by <a href="https://linkedin.com/in/harsh-kathrotiya" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">Harsh</a></p>
+          <p className="mt-2">Made with 💖 by <a href="https://linkedin.com/in/harsh-kathrotiya" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">harsh</a></p>
         </div>
       </div>
     </footer>

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment, useAnimations, useGLTF } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
@@ -454,7 +454,7 @@ export default function AnimationShowcase() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(60); // Default 60 seconds
+  const [duration] = useState(60); // Default 60 seconds
   const [selectedAnimation, setSelectedAnimation] = useState('');
 
   const selectedModel = animationModels.find(m => m.id === selectedModelId) || animationModels[0];

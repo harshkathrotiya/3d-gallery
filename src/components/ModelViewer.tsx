@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment, useGLTF, Text, ContactShadows, useHelper } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment, ContactShadows, useHelper } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
@@ -136,10 +136,7 @@ function ModelViewerScene({
     return () => clearInterval(interval);
   }, [enableRotation]);
 
-  // Pass the ref to the Model component
-  const ModelWithRef = ({ ...props }) => {
-    return <Model {...props} ref={meshRef} />;
-  };
+  // Use the meshRef directly with the Model component
 
   return (
     <>
@@ -165,7 +162,7 @@ function ModelViewerScene({
       />
 
       {/* Environment for reflections */}
-      <Environment preset={environmentPreset as any} />
+      <Environment preset={environmentPreset} />
 
       {/* Bloom effect */}
       {enableBloom && (

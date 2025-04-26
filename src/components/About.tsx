@@ -11,10 +11,10 @@ export default function About() {
               Welcome to the future of digital galleries. Our 3D Gallery combines cutting-edge technology with stunning visuals to create an immersive experience unlike any other.
             </p>
             <p className="text-gray-300 mb-4">
-              Using the latest in 3D rendering and interactive design, we've created a platform that allows you to showcase your images in a dynamic, engaging environment that captivates viewers and brings your content to life.
+              Using the latest in 3D rendering and interactive design, we&apos;ve created a platform that allows you to showcase your images in a dynamic, engaging environment that captivates viewers and brings your content to life.
             </p>
             <p className="text-gray-300 mb-6">
-              Whether you're an artist looking to display your work, a photographer seeking a new way to present your portfolio, or a business wanting to showcase products in an innovative way, our 3D Gallery provides the perfect solution.
+              Whether you&apos;re an artist looking to display your work, a photographer seeking a new way to present your portfolio, or a business wanting to showcase products in an innovative way, our 3D Gallery provides the perfect solution.
             </p>
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors">
               Learn More

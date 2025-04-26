@@ -127,7 +127,7 @@ function ProjectCard({
   position,
   color,
   title,
-  description: _description,
+  description,
   imageUrl: customImageUrl,
   index,
   currentIndex,
@@ -274,7 +274,7 @@ function ProjectCard({
         texture.dispose();
       }
     };
-  }, [imageUrl, isActive, highResImageUrl]);
+  }, [imageUrl, isActive, highResImageUrl, texture]);
 
   // Load high-res version when card becomes active
   useEffect(() => {
@@ -300,7 +300,7 @@ function ProjectCard({
         }
       );
     }
-  }, [isActive, imageLoaded, highResImageUrl]);
+  }, [isActive, imageLoaded, highResImageUrl, texture]);
 
   // Convert hex color to THREE.Color
   const threeColor = useMemo(() => new THREE.Color(color), [color]);

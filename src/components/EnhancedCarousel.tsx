@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment, useGLTF, Text } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment, Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -40,17 +40,17 @@ const carouselModels = [
 ];
 
 // Dynamic 3D Model component that renders different geometries based on type
-function DynamicModel({ 
-  modelType, 
-  color, 
-  position = [0, 0, 0], 
-  scale = 1, 
+function DynamicModel({
+  modelType,
+  color,
+  position = [0, 0, 0],
+  scale = 1,
   isActive = false,
   onInteraction
-}: { 
-  modelType: string; 
-  color: string; 
-  position?: [number, number, number]; 
+}: {
+  modelType: string;
+  color: string;
+  position?: [number, number, number];
   scale?: number;
   isActive?: boolean;
   onInteraction?: () => void;
@@ -60,10 +60,9 @@ function DynamicModel({
   const particlesRef = useRef<THREE.Points>(null!);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
-  
-  // Convert hex color to THREE.Color
-  const threeColor = new THREE.Color(color);
-  
+
+  // Convert hex color is handled directly in the material
+
   // Handle interactions
   const handlePointerOver = () => setHovered(true);
   const handlePointerOut = () => setHovered(false);
@@ -71,11 +70,11 @@ function DynamicModel({
     setClicked(!clicked);
     if (onInteraction) onInteraction();
   };
-  
+
   // Animation effects when state changes
   useEffect(() => {
     if (!modelRef.current || !glowRef.current) return;
-    
+
     // Use GSAP for smooth animations
     gsap.to(modelRef.current.scale, {
       x: hovered ? 1.1 : isActive ? 1.2 : 1,
@@ -84,14 +83,14 @@ function DynamicModel({
       duration: 0.5,
       ease: 'power2.out'
     });
-    
+
     gsap.to(glowRef.current.material, {
       opacity: hovered ? 0.7 : isActive ? 0.5 : 0.3,
       emissiveIntensity: hovered ? 1.5 : isActive ? 1.0 : 0.5,
       duration: 0.5,
       ease: 'power2.out'
     });
-    
+
     // Rotation animation
     if (clicked || isActive) {
       gsap.to(modelRef.current.rotation, {
@@ -101,24 +100,24 @@ function DynamicModel({
       });
     }
   }, [hovered, clicked, isActive]);
-  
+
   // Create particles for the model
   const particleCount = 200;
   const particlePositions = new Float32Array(particleCount * 3);
   const particleSizes = new Float32Array(particleCount);
-  
+
   for (let i = 0; i < particleCount; i++) {
     const radius = 1.5;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.random() * Math.PI;
-    
+
     particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
     particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
     particlePositions[i * 3 + 2] = radius * Math.cos(phi);
-    
+
     particleSizes[i] = Math.random() * 0.05 + 0.01;
   }
-  
+
   // Render different geometries based on modelType
   let geometry;
   switch (modelType) {
@@ -135,7 +134,7 @@ function DynamicModel({
     default:
       geometry = <sphereGeometry args={[1, 32, 32]} />;
   }
-  
+
   return (
     <group position={position} scale={scale}>
       {/* Glow effect */}
@@ -149,7 +148,7 @@ function DynamicModel({
           opacity={0.3}
         />
       </mesh>
-      
+
       {/* Main model */}
       <mesh
         ref={modelRef}
@@ -168,7 +167,7 @@ function DynamicModel({
           emissiveIntensity={0.2}
         />
       </mesh>
-      
+
       {/* Particles */}
       <points ref={particlesRef}>
         <bufferGeometry>
@@ -201,7 +200,7 @@ function DynamicModel({
 // Scene component that contains all 3D elements
 function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; onChangeIndex: (index: number) => void }) {
   const mousePosition = useRef({ x: 0, y: 0 });
-  
+
   // Update mouse position for interactive effects
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -211,25 +210,25 @@ function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; 
         y: -(event.clientY / window.innerHeight) * 2 + 1
       };
     };
-    
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-  
+
   return (
     <>
       {/* Camera setup */}
       <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={50} />
-      
+
       {/* Lighting */}
       <ambientLight intensity={0.4} />
       <directionalLight position={[5, 5, 5]} intensity={0.8} color="#ffffff" />
       <pointLight position={[-5, 3, 0]} intensity={0.5} color="#3b82f6" />
       <pointLight position={[5, -3, 0]} intensity={0.5} color="#22c55e" />
-      
+
       {/* Environment for reflections */}
       <Environment preset="city" />
-      
+
       {/* Models */}
       {carouselModels.map((model, index) => {
         // Calculate position based on index and current selection
@@ -237,7 +236,7 @@ function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; 
         const radius = 4;
         const x = Math.sin(angle) * radius;
         const z = Math.cos(angle) * radius - radius;
-        
+
         return (
           <DynamicModel
             key={model.id}
@@ -250,7 +249,7 @@ function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; 
           />
         );
       })}
-      
+
       {/* Model info for current selection */}
       <group position={[0, -2, 0]}>
         <Text
@@ -277,7 +276,7 @@ function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; 
           {carouselModels[currentIndex].description}
         </Text>
       </group>
-      
+
       {/* Controls */}
       <OrbitControls
         enableZoom={false}
@@ -295,25 +294,25 @@ function CarouselScene({ currentIndex, onChangeIndex }: { currentIndex: number; 
 export default function EnhancedCarousel() {
   const [currentModelIndex, setCurrentModelIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-    
+
     return () => clearTimeout(timer);
   }, []);
-  
+
   // Handle navigation
   const goToNextModel = () => {
     setCurrentModelIndex((prev) => (prev + 1) % carouselModels.length);
   };
-  
+
   const goToPrevModel = () => {
     setCurrentModelIndex((prev) => (prev - 1 + carouselModels.length) % carouselModels.length);
   };
-  
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* Loading overlay */}
@@ -325,7 +324,7 @@ export default function EnhancedCarousel() {
           </div>
         </div>
       )}
-      
+
       {/* Title overlay */}
       <div className="absolute top-0 left-0 right-0 z-20 pt-24 text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
@@ -337,7 +336,7 @@ export default function EnhancedCarousel() {
           Explore our collection of interactive 3D models and experiences
         </p>
       </div>
-      
+
       {/* 3D Canvas */}
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 6], fov: 50 }}>
         <color attach="background" args={['#030712']} />
@@ -347,7 +346,7 @@ export default function EnhancedCarousel() {
           onChangeIndex={setCurrentModelIndex}
         />
       </Canvas>
-      
+
       {/* Navigation controls */}
       <div className="absolute bottom-1/2 left-0 right-0 z-20 flex justify-between px-4 md:px-10">
         <motion.button
@@ -371,7 +370,7 @@ export default function EnhancedCarousel() {
           </svg>
         </motion.button>
       </div>
-      
+
       {/* Indicators */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
         {carouselModels.map((_, index) => (
@@ -387,7 +386,7 @@ export default function EnhancedCarousel() {
           />
         ))}
       </div>
-      
+
       {/* Explore button */}
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20">
         <motion.button
@@ -401,7 +400,7 @@ export default function EnhancedCarousel() {
           Explore Gallery
         </motion.button>
       </div>
-      
+
       {/* Custom branding */}
       <div className="absolute bottom-4 right-4 text-white/70 text-xs z-30 flex items-center">
         <span className="mr-1">Powered by</span>
