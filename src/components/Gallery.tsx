@@ -56,19 +56,19 @@ const galleryImages = [
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedImage, setSelectedImage] = useState(null);
-  
+  const [selectedImage, setSelectedImage] = useState<{id: number; src: string; alt: string; category: string} | null>(null);
+
   const categories = ['all', 'nature', 'architecture', 'animals'];
-  
-  const filteredImages = activeCategory === 'all' 
-    ? galleryImages 
+
+  const filteredImages = activeCategory === 'all'
+    ? galleryImages
     : galleryImages.filter(img => img.category === activeCategory);
 
   return (
     <section id="gallery" className="py-20 bg-gradient-to-b from-black to-gray-900 text-white">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">Our Gallery</h2>
-        
+
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map(category => (
@@ -76,8 +76,8 @@ export default function Gallery() {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={`px-6 py-2 rounded-full transition-colors ${
-                activeCategory === category 
-                  ? 'bg-blue-600 text-white' 
+                activeCategory === category
+                  ? 'bg-blue-600 text-white'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
@@ -85,17 +85,17 @@ export default function Gallery() {
             </button>
           ))}
         </div>
-        
+
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredImages.map(image => (
-            <div 
-              key={image.id} 
+            <div
+              key={image.id}
               className="relative group overflow-hidden rounded-lg cursor-pointer"
               onClick={() => setSelectedImage(image)}
             >
-              <img 
-                src={image.src} 
+              <img
+                src={image.src}
                 alt={image.alt}
                 className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
               />
@@ -105,24 +105,24 @@ export default function Gallery() {
             </div>
           ))}
         </div>
-        
+
         {/* Image Modal */}
         {selectedImage && (
-          <div 
+          <div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
-            <div 
+            <div
               className="relative max-w-4xl max-h-[90vh]"
               onClick={e => e.stopPropagation()}
             >
-              <img 
-                src={selectedImage.src.replace('w=600', 'w=1200')} 
+              <img
+                src={selectedImage.src.replace('w=600', 'w=1200')}
                 alt={selectedImage.alt}
                 className="max-w-full max-h-[80vh] object-contain"
               />
               <div className="absolute top-0 right-0 m-4">
-                <button 
+                <button
                   onClick={() => setSelectedImage(null)}
                   className="bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
                 >

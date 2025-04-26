@@ -121,9 +121,9 @@ export async function sendChatMessage(userMessage: string, previousMessages: Mes
     try {
       // Check if the content contains JSON
       if (content.includes('```json') || content.includes('\\boxed{```json')) {
-        // Extract JSON content
-        const jsonMatch = content.match(/```json\s*(\{.*?\})\s*```/s) ||
-                         content.match(/\\boxed\{```json\s*(\{.*?\})\s*```\}/s);
+        // Extract JSON content - using a workaround for the 's' flag compatibility
+        const jsonMatch = content.match(/```json\s*([\s\S]*?)\s*```/) ||
+                         content.match(/\\boxed\{```json\s*([\s\S]*?)\s*```\}/);
 
         if (jsonMatch && jsonMatch[1]) {
           const jsonContent = JSON.parse(jsonMatch[1]);

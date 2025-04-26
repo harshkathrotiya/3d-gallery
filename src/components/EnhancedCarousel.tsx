@@ -176,12 +176,14 @@ function DynamicModel({
             count={particleCount}
             array={particlePositions}
             itemSize={3}
+            args={[particlePositions, 3]}
           />
           <bufferAttribute
             attach="attributes-size"
             count={particleCount}
             array={particleSizes}
             itemSize={1}
+            args={[particleSizes, 1]}
           />
         </bufferGeometry>
         <pointsMaterial

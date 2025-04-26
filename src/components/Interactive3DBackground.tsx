@@ -127,7 +127,6 @@ function ProjectCard({
   position,
   color,
   title,
-  description,
   imageUrl: customImageUrl,
   index,
   currentIndex,
@@ -138,7 +137,7 @@ function ProjectCard({
   position: [number, number, number];
   color: string;
   title: string;
-  description?: string;
+  description?: string; // Keep the type definition for future use
   imageUrl?: string;
   index: number;
   currentIndex: number;
@@ -701,11 +700,11 @@ export default function Interactive3DBackground({
 
   // Convert images to project format
   const projects = useMemo(() => {
-    return images.map((image, index) => ({
+    return images.map((image) => ({
       title: image.alt,
       imageUrl: image.src,
-      color: image.color,
-      description: `Project ${index + 1} description`
+      color: image.color
+      // Removed unused index and description properties
     }));
   }, [images]);
 

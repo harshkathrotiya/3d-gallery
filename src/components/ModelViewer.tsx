@@ -41,7 +41,8 @@ const availableModels = [
 // Model component that renders different geometries
 import React from 'react';
 
-const Model = React.forwardRef(({
+// Define the Model component with display name
+const Model = React.forwardRef(function Model({
   geometry,
   color,
   roughness,
@@ -53,7 +54,7 @@ const Model = React.forwardRef(({
   roughness: number;
   metalness: number;
   wireframe: boolean;
-}, ref: React.ForwardedRef<THREE.Mesh>) => {
+}, ref: React.ForwardedRef<THREE.Mesh>) {
   const localMeshRef = useRef<THREE.Mesh>(null!);
   const meshRef = (ref as React.RefObject<THREE.Mesh>) || localMeshRef;
 
@@ -112,7 +113,7 @@ function ModelViewerScene({
   lightIntensity: number;
   lightColor: string;
   showGrid: boolean;
-  environmentPreset: string;
+  environmentPreset: 'sunset' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'studio' | 'city' | 'park' | 'lobby';
   ambientIntensity: number;
   enableBloom: boolean;
   enableRotation: boolean;
@@ -305,8 +306,9 @@ export default function ModelViewer() {
   const [ambientIntensity, setAmbientIntensity] = useState(0.4);
 
   // Environment properties
-  const [environmentPreset, setEnvironmentPreset] = useState('city');
-  const environmentPresets = ['sunset', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'studio', 'city', 'park', 'lobby'];
+  type EnvironmentPreset = 'sunset' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'studio' | 'city' | 'park' | 'lobby';
+  const [environmentPreset, setEnvironmentPreset] = useState<EnvironmentPreset>('city');
+  const environmentPresets: EnvironmentPreset[] = ['sunset', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'studio', 'city', 'park', 'lobby'];
 
   // Display options
   const [showGrid, setShowGrid] = useState(false);
