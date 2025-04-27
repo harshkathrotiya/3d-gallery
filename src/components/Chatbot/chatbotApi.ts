@@ -227,6 +227,146 @@ export async function sendChatMessage(userMessage: string, previousMessages: Mes
         content: userMessage
       }
     ];
+export async function sendChatMessage(userMessage: string, previousMessages: Message[]): Promise<string> {
+  try {
+    // Prepare messages for the API request
+    const formattedMessages = [
+      { role: 'system', content: WEBSITE_CONTEXT },
+      ...previousMessages.map(msg => ({ role: msg.role, content: msg.content })),
+      { role: 'user', content: userMessage }
+    ];
+
+    const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+    if (!apiKey || apiKey === 'your_openrouter_api_key_here') {
+      return "Please set up your OpenRouter API key in the .env.local file to enable AI-generated responses.";
+    }
+
+    const requestBody = {
+      model: "openai/gpt-3.5-turbo",
+      messages: formattedMessages,
+      temperature: 0.4,
+      max_tokens: 1000,
+      top_p: 0.9,
+      presence_penalty: 0.1,
+      frequency_penalty: 0.2
+    };
+    console.log('API Request:', requestBody);
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": typeof window !== 'undefined' ? window.location.href : "https://3dgallery.example.com",
+        "X-Title": "3D Gallery",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    console.log('API Response Status
+import type { Message } from './types';
+
+// Website context to ensure responses are related to the website
+const WEBSITE_CONTEXT = `...`; // Truncated for brevity
+
+export async function sendChatMessage(userMessage: string, previousMessages: Message[]): Promise<string> {
+  try {
+    // Prepare messages for the API request
+    const formattedMessages = [
+      { role: 'system', content: WEBSITE_CONTEXT },
+      ...previousMessages.map(msg => ({ role: msg.role, content: msg.content })),
+      { role: 'user', content: userMessage }
+    ];
+
+    const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+    if (!apiKey || apiKey === 'your_openrouter_api_key_here') {
+      return "Please set up your OpenRouter API key in the .env.local file to enable AI-generated responses.";
+    }
+
+    const requestBody = {
+      model: "openai/gpt-3.5-turbo",
+      messages: formattedMessages,
+      temperature: 0.4,
+      max_tokens: 1000,
+      top_p: 0.9,
+      presence_penalty: 0.1,
+      frequency_penalty: 0.2
+    };
+    console.log('API Request:', requestBody);
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": typeof window !== 'undefined' ? window.location.href : "https://3dgallery.example.com",
+        "X-Title": "3D Gallery",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    console.log('API Response Status:', response.status, response.statusText);
+
+    if (!response.ok) {
+      return await handleApiError(response);
+    }
+
+    const data = await response.json();
+    console.log('API Response:', data);
+
+    return parseApiResponse(data);
+
+  } catch (error) {
+    console.error('Error in sendChatMessage:', error);
+    return handleGeneralError(error);
+  }
+}
+
+async function handleApiError(response: Response): Promise<string> {
+  let errorMessage = `API error: ${response.status}`;
+  try {
+    const errorData = await response.json();
+    console.error('API error details:', errorData);
+    if (errorData.error && errorData.error.message) {
+      errorMessage = `API error: ${errorData.error.message}`;
+    }
+  } catch (e) {
+    console.error('Could not parse error response:', e);
+  }
+  return errorMessage;
+}
+
+function parseApiResponse(data: any): string {
+  let content = '';
+
+  if (data.choices && data.choices.length > 0 && data.choices[0].message) {
+    content = data.choices[0].message.content;
+  } else if (data.content) {
+    content = data.content;
+  } else if (data.response) {
+    content = typeof data.response === 'string' ? data.response : JSON.stringify(data.response);
+  } else if (data.message && data.message.content) {
+    content = data.message.content;
+  } else if (Object.keys(data).length === 0) {
+    console.error('Empty API response received');
+    return 'Sorry, I received an empty response from the API. This might be due to rate limiting or an issue with the API key. Please try again later.';
+  } else {
+    console.error('Unexpected API response structure:', data);
+    return `Sorry, I couldn't generate a response. The API returned an unexpected format. Response: ${JSON.stringify(data)}`;
+  }
+
+  return content || 'Sorry, I couldn\'t generate a response.';
+}
+
+function handleGeneralError(error: any): string {
+  if (error instanceof Error && error.message.includes('API error: 401')) {
+    return "Authentication failed. Please check that your OpenRouter API key is valid and has sufficient credits.";
+  } else if (error instanceof Error && error.message.includes('API error: 429')) {
+    return "Rate limit exceeded. Please try again later or check your OpenRouter API usage limits.";
+  } else {
+    return "I'm having trouble connecting to my knowledge base right now. Please make sure you've set up the OpenRouter API key correctly in the .env.local file, or try again later.";
+  }
+}
 
     // Check if API key is available
     const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;

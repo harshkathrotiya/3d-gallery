@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 // Sample gallery images
 const galleryImages = [
@@ -94,11 +95,16 @@ export default function Gallery() {
               className="relative group overflow-hidden rounded-lg cursor-pointer"
               onClick={() => setSelectedImage(image)}
             >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-              />
+              <div className="w-full h-64 relative">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority={image.id <= 4}
+                />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                 <p className="text-white p-4">{image.alt}</p>
               </div>
@@ -116,11 +122,16 @@ export default function Gallery() {
               className="relative max-w-4xl max-h-[90vh]"
               onClick={e => e.stopPropagation()}
             >
-              <img
-                src={selectedImage.src.replace('w=600', 'w=1200')}
-                alt={selectedImage.alt}
-                className="max-w-full max-h-[80vh] object-contain"
-              />
+              <div className="relative w-full max-w-4xl h-[80vh]">
+                <Image
+                  src={selectedImage.src.replace('w=600', 'w=1200')}
+                  alt={selectedImage.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-contain"
+                  priority
+                />
+              </div>
               <div className="absolute top-0 right-0 m-4">
                 <button
                   onClick={() => setSelectedImage(null)}
